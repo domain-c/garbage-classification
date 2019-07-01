@@ -99,47 +99,17 @@ $(function () {
         errorClass: 'help-block',
         focusInvalid: true,
         rules: {
-            username: {
-                required: true,
-                rangelength: [2, 10],
-                myValid01: true
-            },
-            jobNo: {
+            garbageName: {
                 required: true
             },
-            points: {
-                required: true
-            },
-            growthValue: {
-                required: true
-            },
-            entryTime: {
-                required: true
+            detail: {
+                required: false
             }
         },
         messages: {
-            username: {
-                required: '请输入姓名',
-                rangelength: "姓名长度限制为2~10"
-            },
-            jobNo: {
-                required: '请输入工号'
-            },
-            points: {
-                required: '请输入积分值',
-                min: '最小输入值为0',
-                max: '最大输入值为99999'
-            },
-            growthValue: {
-                required: '请输入成长值',
-                min: '最小输入值为0',
-                max: '最大输入值为99999'
-            },
-            entryTime: {
-                required: '请输入入职时间'
-            },
-            birthday: {
-                required: '请输入生日日期'
+            garbageName: {
+                required: '请输入垃圾名称',
+                rangelength: "长度限制为1~50"
             }
         },
         highlight: function (element) {
@@ -153,13 +123,10 @@ $(function () {
             element.parent('div').append(error);
         },
         submitHandler: function (form) {
-            $.post(basePath + "/admin/member/add", {
-                'username': $("#addModal .form input[name='username']").val(),
-                'jobNo': $("#addModal .form input[name='jobNo']").val(),
-                'points': $("#addModal .form input[name='points']").val(),
-                'growthValue': $("#addModal .form input[name='growthValue']").val(),
-                'entryTime': $("#addModal .form input[name='entryTime']").val(),
-                'birthday': $("#addModal .form input[name='birthday']").val()
+            $.post(basePath + "/admin/add", {
+                'belongClassification': $("#addModal .form select[name='type']").val(),
+                'garbageName': $("#addModal .form input[name='garbageName']").val(),
+                'detail': $("#addModal .form input[name='detail']").val()
             }, function (data, status) {
                 if (data.code == 200) {
                     if (data.value == 1) {
@@ -186,20 +153,6 @@ $(function () {
             });
         }
     });
-
-    //
-    // $('.form_date').datetimepicker({
-    //     locale: moment.locale('zh-cn'),
-    //     weekStart: 1,
-    //     todayBtn:  1,
-    //     autoclose: 1,
-    //     todayHighlight: 1,
-    //     startView: 2,
-    //     minView: 2,
-    //     forceParse: 0,
-    //     format: 'YYYY-MM-DD'
-    // });
-
 
     // jquery.validate 自定义校验
     jQuery.validator.addMethod("myValid01", function (value, element) {

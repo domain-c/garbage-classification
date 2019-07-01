@@ -8,6 +8,7 @@ import com.garbage.classification.entity.Employee;
 import com.garbage.classification.entity.Garbage;
 import com.garbage.classification.service.EmployeeService;
 import com.garbage.classification.service.GarbageService;
+import com.garbage.classification.utils.DateUtils;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -116,6 +119,35 @@ public class AdminController {
         // 过滤后的总记录数
         map.put("recordsFiltered", resObj.getTotal());
         return map;
+    }
+
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public ResponseResult addGarbage(Garbage garbage) {
+        ResponseResult responseResult = null;
+        try {
+            garbage.setCreateTime(DateUtils.currentTime(DateUtils.TIME_FORMAT_1));
+            int flag = garbageService.insert(garbage);
+            responseResult = ResponseResult.setSuccess(flag, "");
+        } catch (Exception e) {
+            log.error(CommonCode.IN_SYSTEM_ERROR, e);
+            responseResult = ResponseResult.setError(CommonCode.IN_SYSTEM_ERROR);
+        }
+        return responseResult;
+    }
+
+
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public ResponseResult editGarbage(Garbage garbage) {
+        ResponseResult responseResult = null;
+        try {
+            int flag = garbageService.updateByPrimaryKey(garbage);
+            responseResult = ResponseResult.setSuccess(flag, "");
+        } catch (Exception e) {
+            log.error(CommonCode.IN_SYSTEM_ERROR, e);
+            responseResult = ResponseResult.setError(CommonCode.IN_SYSTEM_ERROR);
+        }
+        return responseResult;
     }
 
 }
