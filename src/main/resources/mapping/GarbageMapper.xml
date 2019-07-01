@@ -1,88 +1,88 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.garbage.classification.dao.GarbageDao" >
-  <resultMap id="BaseResultMap" type="com.garbage.classification.entity.Garbage" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="belong_classification" property="belongClassification" jdbcType="BIGINT" />
-    <result column="garbage_name" property="garbageName" jdbcType="VARCHAR" />
-    <result column="detail" property="detail" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.garbage.classification.dao.GarbageDao">
+    <resultMap id="BaseResultMap" type="com.garbage.classification.entity.Garbage">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="belong_classification" property="belongClassification" jdbcType="BIGINT"/>
+        <result column="garbage_name" property="garbageName" jdbcType="VARCHAR"/>
+        <result column="detail" property="detail" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, belong_classification, garbage_name, detail, create_time
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from garbage
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from garbage
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from garbage
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.garbage.classification.entity.Garbage" >
+    <insert id="insert" parameterType="com.garbage.classification.entity.Garbage">
     insert into garbage (id, belong_classification, garbage_name, 
       detail, create_time)
     values (#{id,jdbcType=BIGINT}, #{belongClassification,jdbcType=BIGINT}, #{garbageName,jdbcType=VARCHAR}, 
       #{detail,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.garbage.classification.entity.Garbage" >
-    insert into garbage
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="belongClassification != null" >
-        belong_classification,
-      </if>
-      <if test="garbageName != null" >
-        garbage_name,
-      </if>
-      <if test="detail != null" >
-        detail,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="belongClassification != null" >
-        #{belongClassification,jdbcType=BIGINT},
-      </if>
-      <if test="garbageName != null" >
-        #{garbageName,jdbcType=VARCHAR},
-      </if>
-      <if test="detail != null" >
-        #{detail,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.garbage.classification.entity.Garbage" >
-    update garbage
-    <set >
-      <if test="belongClassification != null" >
-        belong_classification = #{belongClassification,jdbcType=BIGINT},
-      </if>
-      <if test="garbageName != null" >
-        garbage_name = #{garbageName,jdbcType=VARCHAR},
-      </if>
-      <if test="detail != null" >
-        detail = #{detail,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.garbage.classification.entity.Garbage" >
+    <insert id="insertSelective" parameterType="com.garbage.classification.entity.Garbage">
+        insert into garbage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="belongClassification != null">
+                belong_classification,
+            </if>
+            <if test="garbageName != null">
+                garbage_name,
+            </if>
+            <if test="detail != null">
+                detail,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="belongClassification != null">
+                #{belongClassification,jdbcType=BIGINT},
+            </if>
+            <if test="garbageName != null">
+                #{garbageName,jdbcType=VARCHAR},
+            </if>
+            <if test="detail != null">
+                #{detail,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.garbage.classification.entity.Garbage">
+        update garbage
+        <set>
+            <if test="belongClassification != null">
+                belong_classification = #{belongClassification,jdbcType=BIGINT},
+            </if>
+            <if test="garbageName != null">
+                garbage_name = #{garbageName,jdbcType=VARCHAR},
+            </if>
+            <if test="detail != null">
+                detail = #{detail,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.garbage.classification.entity.Garbage">
     update garbage
     set belong_classification = #{belongClassification,jdbcType=BIGINT},
       garbage_name = #{garbageName,jdbcType=VARCHAR},
@@ -90,4 +90,16 @@
       create_time = #{createTime,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+    <select id="selectAllGarbage" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from garbage
+        where 1=1
+        <if test="garbageName != null">
+            AND garbage_name = #{garbageName,jdbcType=VARCHAR}
+        </if>
+        <if test="belongClassification != null">
+            AND belong_classification = #{belongClassification,jdbcType=BIGINT}
+        </if>
+    </select>
 </mapper>

@@ -60,16 +60,14 @@
             <!-- 全部配置 -->
             <div class="box box-info2">
                 <div class="box-body">
-                    <!--<table id="user_list" class="table table-bordered table-striped" width="100%" >-->
-                    <table id="user_list" class="table table-bordered table-hover" width="100%">
+                    <table id="garbage_list" class="table table-bordered table-hover" width="100%">
                         <thead>
                         <tr>
                             <th>编号</th>
-                            <th>姓名</th>
-                            <th>工号</th>
-                            <th>U米</th>
-                            <th>成长值</th>
-                            <th>操作</th>
+                            <th>垃圾分类</th>
+                            <th>垃圾名称</th>
+                            <th>详述</th>
+                            <!--<th>操作</th>-->
                         </tr>
                         </thead>
                         <tbody></tbody>
@@ -199,11 +197,11 @@
     <script th:src="@{/static/adminlte/plugins/datatables/dataTables.bootstrap.min.js}"></script>
 
     <script th:src="@{/static/adminlte/plugins/daterangepicker/moment.min.js}"></script>
-    <script th:src="@{/static/js/user.1.js}" th:inline="javascript"></script>
+    <script th:src="@{/static/js/garbage.js}" th:inline="javascript"></script>
 
-    <script th:src="@{/static/plugins/jquery-ocupload/jquery.ocupload-1.1.2.js}"></script>
-    <script th:src="@{/static/js/uploadExcel.js}"></script>
-    <script th:src="@{/static/js/editEmployeePoint.js}"></script>
+    <!--<script th:src="@{/static/plugins/jquery-ocupload/jquery.ocupload-1.1.2.js}"></script>-->
+    <!--<script th:src="@{/static/js/uploadExcel.js}"></script>-->
+    <!--<script th:src="@{/static/js/editEmployeePoint.js}"></script>-->
 </div>
 
 <script language="JavaScript" type="text/javascript">
