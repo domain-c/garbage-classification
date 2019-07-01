@@ -1,0 +1,120 @@
+#配置基本信息 端口，字节码server:
+server:
+  port: 8080
+  servlet:
+    context-path: /garbage
+    jsp:
+      init-parameters:
+        development: true
+    session:
+      timeout: 1800s
+  tomcat:
+    uri-encoding: UTF-8
+
+
+spring:
+  gson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  profiles:
+    active: debug
+  http:
+    encoding:
+      force: true
+      charset: utf-8
+      enabled: true
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    #开发中建议设置 false 不使用缓存，生产改为true 使用缓存
+    cache: false
+  mvc:
+    static-path-pattern: /**
+    #出现错误时, 直接抛出异常
+  #    throw-exception-if-no-handler-found: true
+  resources:
+    chain:
+      strategy:
+        content:
+          enabled: true
+          paths: /**
+    # 设置静态文件路径 可以不去配置，spring默认处理了静态文件路径地址
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${web.upload-path}
+  #    add-mappings: true
+  #开启Aop
+  aop:
+    auto: true
+  #配置数据源
+  datasource:
+    druid:
+      # serverTimezone 设置mysql时区,  其中useLegacyDatetimeCode参数默认是true，我们需要手动设置为false，否则无效。
+      url: jdbc:mysql://47.99.100.80:3306/garbage_class?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+      username: root
+      password: root
+      # 数据库驱动可以不用配置
+      driver-class-name: com.mysql.jdbc.Driver
+      initial-size: 1
+      max-active: 20
+      min-idle: 10
+      #<!-- 配置获取连接等待超时的时间 -->
+      max-wait: 60000
+      #<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+      time-between-eviction-runs-millis: 60000
+      #<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 'x'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      #<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+      pool-prepared-statements: false
+      max-pool-prepared-statement-per-connection-size: 20
+      #<!-- 超时回收 -->
+      remove-abandoned: false
+      remove-abandoned-timeout: 1200
+      #<!-- 配置监控统计拦截的filters -->
+      filters: stat
+  redis:
+    # redis 数据库区
+    database: 0
+    host: 127.0.0.1
+    password: 123456
+    port: 6379
+    timeout: 5000
+    jedis:
+      pool:
+        # 连接池中的最大空闲连接，默认值也是8。
+        max-idle: 100
+        # 连接池中的最小空闲连接，默认值也是0。
+        min-idle: 50
+        # 如果赋值为-1，则表示不限制；如果pool已经分配了maxActive个jedis实例，则此时pool的状态为exhausted(耗尽)。
+        max-active: 2000
+        # 等待可用连接的最大时间，单位毫秒，默认值为-1，表示永不超时。如果超过等待时间，则直接抛出JedisConnectionException
+        max-wait: 1000
+      #################redis哨兵设置################# 暂时无需配置
+      #    sentinel:
+      # redis服务器master的名字
+      #      master: master8026
+      # redis-sentinel的配置地址和端口
+
+
+#mybatis配置
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  type-aliases-package: com.podinns.points.domain
+
+#mysql分页配置
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+logging:
+  level:
+    com.onepro.custom.mapper: DEBUG
+
+

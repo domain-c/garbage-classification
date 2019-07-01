@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="commonStyle(title,links)">
+    <title th:text="${title}"></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" th:href="@{/static/adminlte/bootstrap/css/bootstrap.min.css}"/>
+    <!-- Font Awesome -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
+    <link rel="stylesheet" th:href="@{/static/plugins/font-awesome-4.3.0/css/font-awesome.min.css}"/>
+    <!-- Ionicons -->
+    <!-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
+    <link rel="stylesheet" th:href="@{/static/plugins/ionicons-2.0.1/css/ionicons.min.css}"/>
+    <!-- Theme style -->
+    <link rel="stylesheet" th:href="@{/static/adminlte/dist/css/AdminLTE-local.min.css}"/>
+    <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" th:href="@{/static/adminlte/dist/css/skins/_all-skins.min.css}"/>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- scrollup -->
+    <link rel="stylesheet" th:href="@{/static/plugins/scrollup/image.css}"/>
+    <!-- pace -->
+    <link rel="stylesheet" th:href="@{/static/plugins/pace/themes/pace-theme-flash.css}"/>
+    <!--全局通用框架样式 end-->
+    <!--/* Per-page placeholder for additional links */-->
+    <th:block th:replace="${links}"/>
+    <!--/* Per-page placeholder for additional styles */-->
+    <!--<th:block th:replace="${styles}" />-->
+</head>
+<body>
+<!-- header 头部通用设置 -->
+<th:block th:fragment="commonHeader">
+    <header class="main-header">
+        <a href="${request.contextPath}/" class="logo">
+            <span class="logo-mini"><b>管理</b></span>
+            <span class="logo-lg"><b>丢了么后台管理</b></span>
+        </a>
+        <nav class="navbar navbar-static-top" role="navigation">
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"><span
+                    class="sr-only">切换导航</span></a>
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- login member -->
+                    <li class="dropdown">
+                        <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            欢迎 <span th:text="${username}"></span>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li id="updatePwd"><a href="javascript:">修改密码</a></li>
+                            <!--<li id="logoutBtn" ><a th:href="@{/admin/center}">注销</a></li>-->
+                            <li id="logoutBtn"><a href="javascript:">注销</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- 修改密码.模态框 -->
+    <div class="modal fade" id="updatePwdModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">修改密码</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal form" role="form">
+                        <div class="form-group">
+                            <label for="lastname" class="col-sm-2 control-label">旧密码<font color="red">*</font></label>
+                            <div class="col-sm-10"><input type="password" class="form-control" name="oldPassword"
+                                                          placeholder="请输入旧密码" maxlength="20"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname" class="col-sm-2 control-label">新密码<font color="red">*</font></label>
+                            <div class="col-sm-10"><input type="password" class="form-control" name="password"
+                                                          placeholder="请输入新密码" maxlength="100"></div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-6">
+                                <button type="submit" class="btn btn-primary">更新</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+
+<th:block th:fragment="commonFooter">
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>Version</b> 1.0.0
+        </div>
+        <strong>Copyright &copy; 2018-2030 <a href=""></a>.</strong> All rights
+        reserved.
+    </footer>
+</th:block>
+
+
+<th:block th:fragment="commonLeft(page)">
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu">
+                <li class="header">菜单导航</li>
+                <li th:class="${page == 1}?'nav-click active':'nav-click'"><a th:href="@{/admin/garbage}"><i
+                        class="fa fa-circle-o text-aqua"></i><span>垃圾分类</span></a></li>
+                <!--<li th:class="${page == 2}?'nav-click active':'nav-click'"><a th:href="@{/admin/orders}"><i-->
+                        <!--class="fa fa-circle-o text-yellow"></i><span>订单管理</span></a></li>-->
+                <!--<li th:class="${page == 3}?'nav-click active':'nav-click'"><a href="#"><i class="fa fa-circle-o text-green"></i><span>用户管理</span></a></li>-->
+                <!--<li th:class="${page == 4}?'nav-click active':'nav-click'"><a href="#"><i class="fa fa-circle-o text-blue"></i><span>环境管理</span></a></li>-->
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+</th:block>
+
+
+
+<th:block th:fragment="commonScript(script)">
+    <!-- jQuery 2.1.4 -->
+    <script th:src="@{/static/adminlte/plugins/jQuery/jquery-2.2.3.min.js}"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script th:src="@{/static/adminlte/bootstrap/js/bootstrap.min.js}"></script>
+    <!-- FastClick -->
+    <script th:src="@{/static/adminlte/plugins/fastclick/fastclick.min.js}"></script>
+    <!-- AdminLTE App -->
+    <script th:src="@{/static/adminlte/dist/js/app.min.js}"></script>
+    <!-- scrollup -->
+    <script th:src="@{/static/plugins/scrollup/jquery.scrollUp.min.js}"></script>
+    <!-- pace -->
+    <script th:src="@{/static/plugins/pace/pace.min.js}"></script>
+    <!-- jquery.cookie -->
+    <script th:src="@{/static/plugins/jquery/jquery.cookie.js}"></script>
+    <!-- jquery.validate -->
+    <script th:src="@{/static/plugins/jquery/jquery.validate.min.js}"></script>
+    <!-- layer -->
+    <script th:src="@{/static/plugins/layer/layer.js}"></script>
+    <!--<script>var base_url = '${request.contextPath}';</script>-->
+    <script th:src="@{/static/js/common.1.js}"></script>
+    <!-- 引入js -->
+    <th:block th:replace="${script}"/>
+</th:block>
+
+<th:block th:fragment="blankScript(script)">
+    <th:block th:replace="${script}"/>
+</th:block>
+
+<script th:fragment="outerJs01" xmlns:th="http://www.springframework.org/schema/mvc" type="text/javascript"
+        th:inline="javascript">
+    /*<![CDATA[*/
+    var basePath = /*[[${#httpServletRequest.getScheme() + "://" + #httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]]*/;
+    /*]]>*/
+</script>
+</body>
+</html>
