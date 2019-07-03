@@ -14,10 +14,18 @@ import java.util.Map;
 public interface GarbageDao extends BaseDao<Garbage> {
 
     /**
-     *  获取全部垃圾分类清单
+     * 获取全部垃圾分类清单
+     *
      * @param map 条件
      * @return List<Garbage>
      */
-    List<Garbage> selectAllGarbage(Map<String,Object> map);
+    List<Garbage> selectAllGarbage(Map<String, Object> map);
+
+    /**
+     * 获取全部垃圾分类信息
+     *
+     * @return List<Garbage>
+     */
+    List<Garbage> selectAllListGarbage();
 
 }

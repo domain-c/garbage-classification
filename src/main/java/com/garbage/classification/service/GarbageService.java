@@ -19,8 +19,15 @@ public interface GarbageService extends BaseService<Garbage> {
      *
      * @param pageInfo 分页
      * @param map      条件
-     * @return List<Garbage
+     * @return List<Garbage>
      */
     Result<ResObj<Garbage>> findAllGarbage(PageInfo<Garbage> pageInfo, Map<String, Object> map);
+
+    /**
+     * 获取全部垃圾分类信息
+     *
+     * @return List<Garbage>
+     */
+    Result<List<Garbage>> findAllListGarbage();
 
 }

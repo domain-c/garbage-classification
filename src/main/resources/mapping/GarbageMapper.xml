@@ -102,4 +102,10 @@
             AND belong_classification = #{belongClassification,jdbcType=BIGINT}
         </if>
     </select>
+    <select id="selectAllListGarbage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from garbage
+        where 1=1
+    </select>
 </mapper>
