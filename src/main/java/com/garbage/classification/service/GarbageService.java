@@ -30,4 +30,12 @@ public interface GarbageService extends BaseService<Garbage> {
      */
     Result<List<Garbage>> findAllListGarbage();
 
+    /**
+     * 模糊查询垃圾名称
+     *
+     * @param garbageName 垃圾名称
+     * @return List<Garbage>
+     */
+    Result<List<Garbage>> findLikeGarbageName(String garbageName);
+
 }

@@ -1,6 +1,6 @@
 #配置基本信息 端口，字节码server:
 server:
-  port: 8080
+  port: 8090
   servlet:
     context-path: /garbage
     jsp:
@@ -115,6 +115,6 @@ pagehelper:
 
 logging:
   level:
-    com.onepro.custom.mapper: DEBUG
+    com.garbage.classification.dao: DEBUG
 
 

@@ -54,4 +54,17 @@ public class GarbageServiceImpl extends BaseServiceImpl<Garbage> implements Garb
         }
         return result;
     }
+
+    @Override
+    public Result<List<Garbage>> findLikeGarbageName(String garbageName) {
+        Result result = null;
+        try {
+            List<Garbage> list = garbageDao.selectLikeGarbageName(garbageName);
+            result = Result.setSucceed(list);
+        } catch (Exception e) {
+            log.error(CommonCode.IN_SYSTEM_ERROR, e);
+            result = Result.setFailMsg(CommonCode.IN_SYSTEM_ERROR);
+        }
+        return result;
+    }
 }

@@ -1,12 +1,16 @@
 package com.garbage.classification.controller;
 
+import com.garbage.classification.common.CommonCode;
 import com.garbage.classification.common.ResponseResult;
 import com.garbage.classification.common.Result;
 import com.garbage.classification.entity.Garbage;
 import com.garbage.classification.service.GarbageService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -19,6 +23,7 @@ import java.util.stream.Collectors;
  * @author domain
  * @date 2019-07-03
  */
+@Slf4j
 @RestController
 @RequestMapping("/api")
 public class ApiController {
@@ -55,6 +60,22 @@ public class ApiController {
             response = ResponseResult.setSuccess(resultList, "成功");
         } else {
             response = ResponseResult.setError(result.getResMsg());
+        }
+        return response;
+    }
+
+    @PostMapping("/queryGarbageName")
+    public ResponseResult queryGarbageName(@RequestParam("garbageName") String garbageName) {
+        ResponseResult response = null;
+        try {
+            if (!StringUtils.isEmpty(garbageName)) {
+                Result<List<Garbage>> result = garbageService.findLikeGarbageName(garbageName);
+                List<Garbage> list = (List<Garbage>) result.getObj();
+                response = ResponseResult.setSuccess(list, "成功");
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            response = ResponseResult.setError(CommonCode.IN_SYSTEM_ERROR);
         }
         return response;
     }

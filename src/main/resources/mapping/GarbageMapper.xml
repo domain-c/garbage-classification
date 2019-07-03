@@ -108,4 +108,9 @@
         from garbage
         where 1=1
     </select>
+    <select id="selectLikeGarbageName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from garbage where garbage_name like CONCAT(CONCAT('%', #{garbageName, jdbcType=VARCHAR}), '%');
+    </select>
 </mapper>
