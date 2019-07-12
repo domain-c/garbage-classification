@@ -4,7 +4,9 @@ import com.garbage.classification.common.CommonCode;
 import com.garbage.classification.common.ResponseResult;
 import com.garbage.classification.common.Result;
 import com.garbage.classification.entity.Garbage;
+import com.garbage.classification.entity.GarbageUnknown;
 import com.garbage.classification.service.GarbageService;
+import com.garbage.classification.service.GarbageUnknownService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -30,6 +32,9 @@ public class ApiController {
 
     @Autowired
     GarbageService garbageService;
+
+    @Autowired
+    GarbageUnknownService garbageUnknownService;
 
     @PostMapping("/getAllGarbage")
     public ResponseResult getAllGarbage() {
@@ -71,6 +76,11 @@ public class ApiController {
             if (!StringUtils.isEmpty(garbageName)) {
                 Result<List<Garbage>> result = garbageService.findLikeGarbageName(garbageName);
                 List<Garbage> list = (List<Garbage>) result.getObj();
+                if (list.size() == 0) {
+                    // 触发没有记录保存
+                    GarbageUnknown gn = new GarbageUnknown(garbageName);
+                    garbageUnknownService.insert(gn);
+                }
                 response = ResponseResult.setSuccess(list, "成功");
             }
         } catch (Exception e) {
