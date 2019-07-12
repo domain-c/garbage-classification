@@ -7,6 +7,7 @@ import com.garbage.classification.entity.Garbage;
 import com.garbage.classification.entity.GarbageUnknown;
 import com.garbage.classification.service.GarbageService;
 import com.garbage.classification.service.GarbageUnknownService;
+import com.garbage.classification.utils.GarbageCatchUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -77,9 +78,19 @@ public class ApiController {
                 Result<List<Garbage>> result = garbageService.findLikeGarbageName(garbageName);
                 List<Garbage> list = (List<Garbage>) result.getObj();
                 if (list.size() == 0) {
-                    // 触发没有记录保存
-                    GarbageUnknown gn = new GarbageUnknown(garbageName);
-                    garbageUnknownService.insert(gn);
+                    //触发捕获数据
+                    try {
+                        Garbage garbage = GarbageCatchUtils.catchGarbage(garbageName);
+                        if (garbage != null) {
+                            garbageService.insert(garbage);
+                            list.add(garbage);
+                        }
+                    } catch (Exception e) {
+                        log.error(e.getMessage());
+                        // 触发没有记录保存
+                        GarbageUnknown gn = new GarbageUnknown(garbageName);
+                        garbageUnknownService.insert(gn);
+                    }
                 }
                 response = ResponseResult.setSuccess(list, "成功");
             }
