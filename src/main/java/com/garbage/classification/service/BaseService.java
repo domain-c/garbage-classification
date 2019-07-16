@@ -17,7 +17,7 @@ public interface BaseService<T> {
      * @param id 对象ID
      * @return
      */
-    public int deleteByPrimaryKey(Integer id);
+    public int deleteByPrimaryKey(Long id);
 
     /**
      * 保存对象
@@ -31,7 +31,7 @@ public interface BaseService<T> {
      * @param id
      * @return
      */
-    T selectByPrimaryKey(Integer id);
+    T selectByPrimaryKey(Long id);
 
     /**
      * 更新操作

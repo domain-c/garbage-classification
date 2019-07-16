@@ -6,10 +6,13 @@ import com.garbage.classification.common.ResponseResult;
 import com.garbage.classification.common.Result;
 import com.garbage.classification.entity.Employee;
 import com.garbage.classification.entity.Garbage;
+import com.garbage.classification.entity.GarbageUnknown;
 import com.garbage.classification.service.EmployeeService;
 import com.garbage.classification.service.GarbageService;
+import com.garbage.classification.service.GarbageUnknownService;
 import com.garbage.classification.utils.DateUtils;
 import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -41,6 +44,9 @@ public class AdminController {
 
     @Autowired
     GarbageService garbageService;
+
+    @Autowired
+    GarbageUnknownService garbageUnknownService;
 
     /**
      * 登录页面
@@ -149,5 +155,52 @@ public class AdminController {
         }
         return responseResult;
     }
+
+
+    @RequestMapping(value = "/garbageUn", method = RequestMethod.GET)
+    public ModelAndView garbageUn(ModelAndView modelAndView, Model model, HttpSession session) {
+        modelAndView.setViewName("garbage/garbage_un_l");
+        Employee employee = (Employee) session.getAttribute("adminUser");
+        model.addAttribute("username", employee.getUsername());
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/garbageUnL", method = RequestMethod.POST)
+    public Map<String, Object> garbageUnL(@RequestParam(required = false, defaultValue = "0") int start,
+                                          @RequestParam(required = false, defaultValue = "5") int length,
+                                          @RequestParam(required = false, defaultValue = "") String key) {
+        Map<String, Object> map = new HashMap<>(10);
+        PageInfo<GarbageUnknown> pageInfo = new PageInfo<>();
+        pageInfo.setPageNum(start);
+        pageInfo.setPageSize(length);
+        Map<String, Object> param = new HashMap<>(1);
+        if (!StringUtils.isEmpty(key)) {
+            param.put("title", key.trim());
+        }
+        Result<ResObj<GarbageUnknown>> result = garbageUnknownService.findAllUnGarbage(pageInfo, map);
+        ResObj resObj = (ResObj) result.getObj();
+        map.put("data", resObj.getList());
+        // 总记录数
+        map.put("recordsTotal", resObj.getTotal());
+        // 过滤后的总记录数
+        map.put("recordsFiltered", resObj.getTotal());
+        return map;
+    }
+
+
+    @RequestMapping(value = "/ascertain", method = RequestMethod.POST)
+    public ResponseResult ascertain(@RequestParam(required = false) Long unId,
+                                    @RequestParam(required = false) Long type) {
+        GarbageUnknown garbageUnknown = garbageUnknownService.selectByPrimaryKey(unId);
+        if (garbageUnknown != null) {
+            Garbage garbage = new Garbage(type, garbageUnknown.getTitle());
+            int flag = garbageService.insert(garbage);
+            if (flag == 1) {
+                garbageUnknownService.deleteByPrimaryKey(unId);
+            }
+        }
+        return ResponseResult.setSuccess("修改成功");
+    }
+
 
 }

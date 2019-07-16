@@ -23,7 +23,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     }
 
     @Override
-    public int deleteByPrimaryKey(Integer id) {
+    public int deleteByPrimaryKey(Long id) {
         return baseDao.deleteByPrimaryKey(id);
     }
 
@@ -33,7 +33,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     }
 
     @Override
-    public T selectByPrimaryKey(Integer id) {
+    public T selectByPrimaryKey(Long id) {
         return baseDao.selectByPrimaryKey(id);
     }
 

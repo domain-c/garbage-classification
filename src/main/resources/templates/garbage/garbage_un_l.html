@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/common::commonStyle('未知分类',~{::link})">
+    <link rel="stylesheet" th:href="@{/static/adminlte/plugins/datatables/dataTables.bootstrap.css}"/>
+    <!--<link rel="stylesheet" th:href="@{/static/css/datetimepicker/bootstrap-datetimepicker.min.css}" />-->
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!-- 引入header-->
+    <div th:replace="common/common::commonHeader"></div>
+    <!-- 引入left菜单栏 -->
+    <div th:replace="common/common::commonLeft(2)"></div>
+
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>分类管理
+                <small></small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a><i class="fa fa-dashboard"></i>中心</a></li>
+                <li class="active">未知列表</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-2">
+                    <div class="input-group">
+                        <span class="input-group-addon">名称</span>
+                        <input type="text" class="form-control" id="key" autocomplete="on">
+                    </div>
+                </div>
+                <div class="col-xs-1">
+                    <button class="btn btn-block btn-info" id="searchBtn">搜索</button>
+                </div>
+            </div>
+
+            <!-- 全部配置 -->
+            <div class="box box-info2">
+                <div class="box-body">
+                    <table id="garbage_un_list" class="table table-bordered table-hover" width="100%">
+                        <thead>
+                        <tr>
+                            <!--<th>编号</th>-->
+                            <th>名称</th>
+                            <th>新增时间</th>
+                            <!--<th>详述</th>-->
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </section>
+        <!-- section end -->
+    </div>
+    <div th:replace="common/common::commonFooter"></div>
+</div>
+
+<!-- js引入-->
+<div th:replace="common/common::commonScript(~{::script})">
+    <script th:replace="common/common::outerJs01"></script>
+    <script th:src="@{/static/adminlte/plugins/datatables/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/static/adminlte/plugins/datatables/dataTables.bootstrap.min.js}"></script>
+
+    <script th:src="@{/static/adminlte/plugins/daterangepicker/moment.min.js}"></script>
+    <script th:src="@{/static/js/garbage_un.js}" th:inline="javascript"></script>
+</div>
+</body>
+<script language="JavaScript" type="text/javascript">
+</script>
+</html>

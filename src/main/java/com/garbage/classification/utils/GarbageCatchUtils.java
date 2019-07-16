@@ -3,7 +3,9 @@ package com.garbage.classification.utils;
 import com.garbage.classification.entity.Garbage;
 import com.github.pagehelper.util.StringUtil;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -62,7 +64,6 @@ public class GarbageCatchUtils {
         List<String> title = new ArrayList<>();
         for (String s : info) {
             Matcher m = proInfo.matcher(s);
-            Product p = null;
             if (m.find()) {
 //                有害垃圾 可回收物 湿垃圾(厨余垃圾)  干垃圾(其它垃圾)
                 String[] ss = m.group().trim().replace(" ", "").split("</span>");

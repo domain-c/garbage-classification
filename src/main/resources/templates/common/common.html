@@ -116,10 +116,12 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 <li class="header">菜单导航</li>
-                <li th:class="${page == 1}?'nav-click active':'nav-click'"><a th:href="@{/admin/garbage}"><i
-                        class="fa fa-circle-o text-aqua"></i><span>垃圾分类</span></a></li>
-                <!--<li th:class="${page == 2}?'nav-click active':'nav-click'"><a th:href="@{/admin/orders}"><i-->
-                        <!--class="fa fa-circle-o text-yellow"></i><span>订单管理</span></a></li>-->
+                <li th:class="${page == 1}?'nav-click active':'nav-click'">
+                    <a th:href="@{/admin/garbage}"><i class="fa fa-circle-o text-aqua"></i><span>分类管理</span></a>
+                </li>
+                <li th:class="${page == 2}?'nav-click active':'nav-click'">
+                    <a th:href="@{/admin/garbageUn}"><i class="fa fa-circle-o text-yellow"></i><span>未知分类</span></a>
+                </li>
                 <!--<li th:class="${page == 3}?'nav-click active':'nav-click'"><a href="#"><i class="fa fa-circle-o text-green"></i><span>用户管理</span></a></li>-->
                 <!--<li th:class="${page == 4}?'nav-click active':'nav-click'"><a href="#"><i class="fa fa-circle-o text-blue"></i><span>环境管理</span></a></li>-->
             </ul>
@@ -127,7 +129,6 @@
         <!-- /.sidebar -->
     </aside>
 </th:block>
-
 
 
 <th:block th:fragment="commonScript(script)">
