@@ -12,9 +12,7 @@ $(function () {
             type: "post",
             data: function (d) {
                 var obj = {};
-                // obj.env = env;
-                obj.type = "";
-                obj.key = "";
+                obj.key = $('#key').val();
                 obj.start = ((d.start / d.length) + 1);
                 obj.length = d.length;
                 return obj;
@@ -24,25 +22,33 @@ $(function () {
         "ordering": false,
         //"scrollX": true,	// X轴滚动条，取消自适应
         "columns": [
-            {"data": 'id', 'width': '10%', "visible": true},
-            {"data": 'belongClassification', 'width': '15%', "visible": true},
+            // {"data": 'id', 'width': '10%', "visible": true},
+            {
+                "data": 'belongClassification', 'width': '15%', "visible": true,
+                "render": function (data, type, row) {
+                    return function () {
+                        //归属分类 1 可回收 2 有害 3 湿垃圾 4 干垃圾
+                        var html = "";
+                        switch (row.belongClassification) {
+                            case 1:
+                                html = "可回收垃圾";
+                                break;
+                            case 2:
+                                html = "有害垃圾";
+                                break;
+                            case 3:
+                                html = "湿垃圾";
+                                break;
+                            case 4:
+                                html = "干垃圾";
+                                break;
+                        }
+                        return html;
+                    };
+                }
+            },
             {"data": 'garbageName', 'width': '20%', "visible": true},
             {"data": 'detail', 'width': '20%', "visible": true}
-            // {
-            //     "data": '操作',
-            //     'width': '20%',
-            //     "render": function (data, type, row) {
-            //         return function () {
-            //             // html
-            //             var html = '<p key="' + row.id + '" >' +
-            //                 '<button class="btn btn-warning btn-xs update" id="detail" type="button">详情</button>  ' +
-            //                 '&nbsp;&nbsp;' +
-            //                 // '<button class="btn btn-danger btn-xs delete" type="button">删除</button>  '+
-            //                 '</p>';
-            //             return html;
-            //         };
-            //     }
-            // }
         ],
         "language": {
             "sProcessing": "处理中...",

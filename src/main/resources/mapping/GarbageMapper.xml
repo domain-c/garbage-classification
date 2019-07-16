@@ -96,7 +96,7 @@
         from garbage
         <where>
             <if test="garbageName != null">
-                AND garbage_name = #{garbageName,jdbcType=VARCHAR}
+                AND garbage_name LIKE CONCAT('%',#{garbageName,jdbcType=VARCHAR},'%')
             </if>
             <if test="belongClassification != null">
                 AND belong_classification = #{belongClassification,jdbcType=BIGINT}

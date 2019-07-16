@@ -28,12 +28,7 @@
             <div class="row">
                 <div class="col-xs-2">
                     <div class="input-group">
-                            <span class="input-group-addon">
-                                <select id="s_type">
-                                    <option value="1">垃圾名称</option>
-                                    <option value="2">工号</option>
-                                </select>
-                            </span>
+                        <span class="input-group-addon">垃圾名称</span>
                         <input type="text" class="form-control" id="key" autocomplete="on">
                     </div>
                 </div>
@@ -54,7 +49,7 @@
                     <table id="garbage_list" class="table table-bordered table-hover" width="100%">
                         <thead>
                         <tr>
-                            <th>编号</th>
+                            <!--<th>编号</th>-->
                             <th>垃圾分类</th>
                             <th>垃圾名称</th>
                             <th>详述</th>
@@ -117,94 +112,13 @@
         </div>
     </div>
 </div>
-
-<!-- 员工积分修改对话框-->
-<div class="modal fade" id="editPoints" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">修改积分与成长值</h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal form" role="form">
-                    <input type="hidden" name="employeeId" id="employeeId" value="0"/>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">姓名</label>
-                        <div class="col-sm-10">
-                            <p class="text-left" id="username">姓名</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">工号</label>
-                        <div class="col-sm-10">
-                            <p class="text-left" id="jobNo">工号</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">积分</label>
-                        <div class="col-sm-10"><input type="number" class="form-control" name="point"
-                                                      placeholder="0不调整，正数加积分，负数表示扣减积分"
-                                                      onkeyup="clearNoNum(this)"></div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">成长值</label>
-                        <div class="col-sm-10"><input type="number" class="form-control" name="growthValue"
-                                                      placeholder="0不调整，正数加成长值，负数表示扣减成长值"
-                                                      oninput="if( this.value.length > 4 )  this.value = this.value.slice(0,6)">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">说明</label>
-                        <div class="col-sm-10"><input type="text" class="form-control" name="reason"
-                                                      placeholder="请输入调整说明" maxlength="100"></div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-primary">保存</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- js引入-->
 <div th:replace="common/common::commonScript(~{::script})">
     <script th:replace="common/common::outerJs01"></script>
     <script th:src="@{/static/adminlte/plugins/datatables/jquery.dataTables.min.js}"></script>
     <script th:src="@{/static/adminlte/plugins/datatables/dataTables.bootstrap.min.js}"></script>
-
     <script th:src="@{/static/adminlte/plugins/daterangepicker/moment.min.js}"></script>
     <script th:src="@{/static/js/garbage.js}" th:inline="javascript"></script>
-
-    <!--<script th:src="@{/static/plugins/jquery-ocupload/jquery.ocupload-1.1.2.js}"></script>-->
-    <!--<script th:src="@{/static/js/uploadExcel.js}"></script>-->
-    <!--<script th:src="@{/static/js/editEmployeePoint.js}"></script>-->
 </div>
-
-<script language="JavaScript" type="text/javascript">
-    function clearNoNum(obj) {
-        // console.log("原值", obj.value);
-        //清除“数字”和“.”以外的字符
-        // obj.value = obj.value.replace(/^(\-)?\d+(\.\d{1,2})?$/g, "");
-        // console.log("第一", obj.value);
-        // //只保留第一个. 清除多余的
-        // obj.value = obj.value.replace(/\.{2,}/g, ".");
-        // console.log("第二", obj.value);
-        // obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
-        // console.log("第三", obj.value);
-        // //只能输入两个小数
-        obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3');
-        // console.log("第四", obj.value);
-        // //以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
-        if (obj.value.indexOf(".") < 0 && obj.value != "") {
-            // console.log("最终", obj.value);
-            obj.value = parseFloat(obj.value);
-        }
-    }
-</script>
 </body>
 </html>

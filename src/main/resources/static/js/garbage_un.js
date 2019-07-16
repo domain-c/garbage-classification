@@ -13,8 +13,7 @@ $(function () {
             type: "post",
             data: function (d) {
                 var obj = {};
-                obj.type = "";
-                obj.key = "";
+                obj.key = $('#key').val();
                 obj.start = ((d.start / d.length) + 1);
                 obj.length = d.length;
                 return obj;
@@ -40,6 +39,8 @@ $(function () {
                             '<button class="btn btn-warning btn-xs"  onclick="ascertain(' + row.id + ',3)" type="button">湿垃圾</button>  ' +
                             '&nbsp;&nbsp;' +
                             '<button class="btn btn-inverse btn-xs"  onclick="ascertain(' + row.id + ',4)" type="button">干垃圾</button>  ' +
+                            '&nbsp;&nbsp;&nbsp;&nbsp;' +
+                            '<button class="btn btn-danger btn-xs"  onclick="deletes(' + row.id + ')" type="button">删除</button>  ' +
                             '</p>';
                         return html;
                     };
@@ -75,20 +76,16 @@ $(function () {
     $("#searchBtn").on('click', function () {
         dataTable.draw(false);
     });
-
-    // $(".change").on('click', function () {
-    //     console.log(this.val())
-    // });[name='detail']
-    // $(":input[name^='locals_']").bind('click',function(){xxxx}).bind('click',function(){yyyy})
-    // $(":button[name^='believe']").bind('click', function () {
-    //     console.log(this.val());
-    // });
-    // $("[name='believe']").bind('click', function () {
-    //     console.log(this.val());
-    // });
 });
+
 function ascertain(id, val) {
     $.post(basePath + "/admin/ascertain", {unId: id, type: val}, function () {
+        dataTable.draw(false);
+    });
+}
+
+function deletes(id) {
+    $.post(basePath + "/admin/unDel", {unId: id}, function () {
         dataTable.draw(false);
     });
 }

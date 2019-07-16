@@ -106,25 +106,18 @@ public class AdminController {
     @RequestMapping(value = "/garbageL", method = RequestMethod.POST)
     public Map<String, Object> garbageL(@RequestParam(required = false, defaultValue = "0") int start,
                                         @RequestParam(required = false, defaultValue = "5") int length,
-                                        @RequestParam(required = false, defaultValue = "0") String type,
                                         @RequestParam(required = false, defaultValue = "") String key) {
-        Map<String, Object> map = new HashMap<>(10);
         PageInfo<Garbage> pageInfo = new PageInfo<>();
         pageInfo.setPageNum(start);
         pageInfo.setPageSize(length);
         Map<String, Object> param = new HashMap<>(1);
-        if (!StringUtils.isEmpty(key) && Integer.valueOf(type) > 0) {
+        if (!StringUtils.isEmpty(key)) {
             param.put("garbageName", key.trim());
-            param.put("belongClassification", Integer.valueOf(type));
+//            param.put("belongClassification", Integer.valueOf(type));
         }
         Result<ResObj<Garbage>> result = garbageService.findAllGarbage(pageInfo, param);
         ResObj resObj = (ResObj) result.getObj();
-        map.put("data", resObj.getList());
-        // 总记录数
-        map.put("recordsTotal", resObj.getTotal());
-        // 过滤后的总记录数
-        map.put("recordsFiltered", resObj.getTotal());
-        return map;
+        return packResultMap(resObj);
     }
 
 
@@ -169,7 +162,6 @@ public class AdminController {
     public Map<String, Object> garbageUnL(@RequestParam(required = false, defaultValue = "0") int start,
                                           @RequestParam(required = false, defaultValue = "5") int length,
                                           @RequestParam(required = false, defaultValue = "") String key) {
-        Map<String, Object> map = new HashMap<>(10);
         PageInfo<GarbageUnknown> pageInfo = new PageInfo<>();
         pageInfo.setPageNum(start);
         pageInfo.setPageSize(length);
@@ -177,29 +169,51 @@ public class AdminController {
         if (!StringUtils.isEmpty(key)) {
             param.put("title", key.trim());
         }
-        Result<ResObj<GarbageUnknown>> result = garbageUnknownService.findAllUnGarbage(pageInfo, map);
+        Result<ResObj<GarbageUnknown>> result = garbageUnknownService.findAllUnGarbage(pageInfo, param);
         ResObj resObj = (ResObj) result.getObj();
-        map.put("data", resObj.getList());
-        // 总记录数
-        map.put("recordsTotal", resObj.getTotal());
-        // 过滤后的总记录数
-        map.put("recordsFiltered", resObj.getTotal());
-        return map;
+        return packResultMap(resObj);
     }
-
 
     @RequestMapping(value = "/ascertain", method = RequestMethod.POST)
     public ResponseResult ascertain(@RequestParam(required = false) Long unId,
                                     @RequestParam(required = false) Long type) {
-        GarbageUnknown garbageUnknown = garbageUnknownService.selectByPrimaryKey(unId);
-        if (garbageUnknown != null) {
-            Garbage garbage = new Garbage(type, garbageUnknown.getTitle());
-            int flag = garbageService.insert(garbage);
-            if (flag == 1) {
-                garbageUnknownService.deleteByPrimaryKey(unId);
+        try {
+            GarbageUnknown garbageUnknown = garbageUnknownService.selectByPrimaryKey(unId);
+            if (garbageUnknown != null) {
+                Garbage garbage = new Garbage(type, garbageUnknown.getTitle());
+                int flag = garbageService.insert(garbage);
+                if (flag == 1) {
+                    garbageUnknownService.deleteByPrimaryKey(unId);
+                }
             }
+        } catch (Exception e) {
+            log.error(CommonCode.IN_SYSTEM_ERROR, e);
+            return ResponseResult.setError(CommonCode.IN_SYSTEM_ERROR);
         }
         return ResponseResult.setSuccess("修改成功");
+    }
+
+    @RequestMapping(value = "/unDel", method = RequestMethod.POST)
+    public ResponseResult unDel(@RequestParam("unId") Long unId) {
+        ResponseResult responseResult = null;
+        try {
+            int flag = garbageUnknownService.deleteByPrimaryKey(unId);
+            responseResult = ResponseResult.setSuccess(flag, "删除成功");
+        } catch (Exception e) {
+            log.error(CommonCode.IN_SYSTEM_ERROR, e);
+            responseResult = ResponseResult.setError(CommonCode.IN_SYSTEM_ERROR);
+        }
+        return responseResult;
+    }
+
+    private Map<String, Object> packResultMap(ResObj resObj) {
+        Map<String, Object> objMap = new HashMap<>(5);
+        objMap.put("data", resObj.getList());
+        // 总记录数
+        objMap.put("recordsTotal", resObj.getTotal());
+        // 过滤后的总记录数
+        objMap.put("recordsFiltered", resObj.getTotal());
+        return objMap;
     }
 
 

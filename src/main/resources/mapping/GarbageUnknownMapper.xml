@@ -85,7 +85,7 @@
         from garbage_unknown
         <where>
             <if test="title != null">
-                AND title = #{title,jdbcType=VARCHAR}
+                AND title LIKE CONCAT('%',#{title,jdbcType=VARCHAR},'%')
             </if>
         </where>
     </select>

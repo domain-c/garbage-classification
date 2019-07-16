@@ -14,7 +14,7 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>分类管理
+            <h1>未知管理
                 <small></small>
             </h1>
             <ol class="breadcrumb">
@@ -59,17 +59,13 @@
     </div>
     <div th:replace="common/common::commonFooter"></div>
 </div>
-
 <!-- js引入-->
 <div th:replace="common/common::commonScript(~{::script})">
     <script th:replace="common/common::outerJs01"></script>
     <script th:src="@{/static/adminlte/plugins/datatables/jquery.dataTables.min.js}"></script>
     <script th:src="@{/static/adminlte/plugins/datatables/dataTables.bootstrap.min.js}"></script>
-
     <script th:src="@{/static/adminlte/plugins/daterangepicker/moment.min.js}"></script>
     <script th:src="@{/static/js/garbage_un.js}" th:inline="javascript"></script>
 </div>
 </body>
-<script language="JavaScript" type="text/javascript">
-</script>
 </html>
