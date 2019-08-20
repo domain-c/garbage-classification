@@ -3,15 +3,14 @@
 <mapper namespace="com.garbage.classification.dao.GarbageDao">
     <resultMap id="BaseResultMap" type="com.garbage.classification.entity.Garbage">
         <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="belong_classification" property="belongClassification" jdbcType="BIGINT"/>
         <result column="garbage_name" property="garbageName" jdbcType="VARCHAR"/>
         <result column="detail" property="detail" jdbcType="VARCHAR"/>
         <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, belong_classification, garbage_name, detail, create_time
+    id, garbage_name, detail, create_time
   </sql>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from garbage
@@ -22,19 +21,16 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
     <insert id="insert" parameterType="com.garbage.classification.entity.Garbage">
-    insert into garbage (id, belong_classification, garbage_name, 
-      detail, create_time)
-    values (#{id,jdbcType=BIGINT}, #{belongClassification,jdbcType=BIGINT}, #{garbageName,jdbcType=VARCHAR}, 
-      #{detail,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR})
+    insert into garbage (id, garbage_name, detail,
+      create_time)
+    values (#{id,jdbcType=BIGINT}, #{garbageName,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR},
+      #{createTime,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.garbage.classification.entity.Garbage">
         insert into garbage
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
-            </if>
-            <if test="belongClassification != null">
-                belong_classification,
             </if>
             <if test="garbageName != null">
                 garbage_name,
@@ -50,9 +46,6 @@
             <if test="id != null">
                 #{id,jdbcType=BIGINT},
             </if>
-            <if test="belongClassification != null">
-                #{belongClassification,jdbcType=BIGINT},
-            </if>
             <if test="garbageName != null">
                 #{garbageName,jdbcType=VARCHAR},
             </if>
@@ -67,9 +60,6 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.garbage.classification.entity.Garbage">
         update garbage
         <set>
-            <if test="belongClassification != null">
-                belong_classification = #{belongClassification,jdbcType=BIGINT},
-            </if>
             <if test="garbageName != null">
                 garbage_name = #{garbageName,jdbcType=VARCHAR},
             </if>
@@ -84,12 +74,13 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.garbage.classification.entity.Garbage">
     update garbage
-    set belong_classification = #{belongClassification,jdbcType=BIGINT},
-      garbage_name = #{garbageName,jdbcType=VARCHAR},
+    set garbage_name = #{garbageName,jdbcType=VARCHAR},
       detail = #{detail,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+
     <select id="selectAllGarbage" resultMap="BaseResultMap" parameterType="java.util.Map">
         select
         <include refid="Base_Column_List"/>
@@ -103,11 +94,13 @@
             </if>
         </where>
     </select>
+
     <select id="selectAllListGarbage" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from garbage
     </select>
+
     <select id="selectLikeGarbageName" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List"/>

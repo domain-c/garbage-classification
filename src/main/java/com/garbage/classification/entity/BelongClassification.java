@@ -1,18 +1,17 @@
 package com.garbage.classification.entity;
 
-
 import lombok.Data;
 
 /**
  * @author domain
  */
 @Data
-public class Garbage {
+public class BelongClassification {
     private Long id;
 
-    private String garbageName;
+    private String adcode;
 
-    private String detail;
+    private String name;
 
     private String createTime;
 

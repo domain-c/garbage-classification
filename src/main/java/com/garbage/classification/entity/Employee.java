@@ -3,7 +3,7 @@ package com.garbage.classification.entity;
 import lombok.Data;
 
 /**
- * @author chenguotu
+ * @author domain
  */
 @Data
 public class Employee {
